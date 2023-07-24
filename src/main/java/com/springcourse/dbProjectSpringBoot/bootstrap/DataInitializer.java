@@ -3,9 +3,11 @@ package com.springcourse.dbProjectSpringBoot.bootstrap;
 import com.springcourse.dbProjectSpringBoot.model.Book;
 import com.springcourse.dbProjectSpringBoot.repositories.BookRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 
+@Profile({"local", "default"})
 @Component
 public class DataInitializer implements CommandLineRunner {
     private final BookRepository bookRepository;
@@ -15,6 +17,8 @@ public class DataInitializer implements CommandLineRunner {
     }
     @Override
     public void run(String... args) throws Exception {
+        bookRepository.deleteAll();
+
         Book book1 = new Book("Domain Driven Design", "123", "RandomHouse");
         System.out.println("Id " + book1.getId());
         Book savedDDD = bookRepository.save(book1);
